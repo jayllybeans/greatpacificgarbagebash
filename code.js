@@ -8,9 +8,9 @@ let pencil = canvas.getContext("2d");
 
 let arr = ["a", "b", "c"];
 let toolbox = new Toolbox();
-let title = new TitleScreen();
-let game = new GameScreen();
-let gameOver = new GameOverScreen();
+let title = new TitleScreen(canvas, pencil);
+let game = new GameScreen(canvas, pencil);
+let gameOver = new GameOverScreen(canvas, pencil);
 
 let state = title;
 
@@ -23,7 +23,18 @@ pencil.fillRect(50, 50, 150, 100);
 console.log(toolbox.getRandomColor());
 
 function gameLoop(){
-    state.update;
+    pencil.clearRect(0, 0, canvas.width, canvas.height);
+    
+    let command = state.update();
+    if (command == "title"){
+        state = title;
+    }
+    if (command == "game"){
+        state = game;
+    }
+    if (command == "gameOver"){
+        state = gameOver;
+    }
 }
 
-setInterval(gameLoop(), 1000/60);
+setInterval(gameLoop, 1000/60);
