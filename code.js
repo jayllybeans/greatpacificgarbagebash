@@ -14,6 +14,8 @@ let gameOver = new GameOverScreen(canvas, pencil);
 
 let state = title;
 
+let ocean = document.getElementById("ocean");
+
 console.log(toolbox.getRandomItem(arr));
 
 console.log(toolbox.shuffleArray(arr));
@@ -24,6 +26,7 @@ console.log(toolbox.getRandomColor());
 
 function gameLoop(){
     pencil.clearRect(0, 0, canvas.width, canvas.height);
+    pencil.drawImage(ocean, 0, 0, canvas.width, canvas.height);
     
     let command = state.update();
     if (command == "title"){
