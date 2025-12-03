@@ -2,21 +2,24 @@ export class TitleScreen{
     canvas;
     pencil;
     changeScreen = false;
+    isClickFinished = false;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
         this.pencil = pencil;
 
-        this.onClick = this.onClick.bind(this);
-        document.addEventListener("click", this.onClick);
+        this.onClickDown = this.onClickDown.bind(this);
+        this.onClickUp = this.onClickUp.bind(this);
+        document.addEventListener("mousedown", this.onClickDown);
+        document.addEventListener("mouseup", this.onClickUp);
     }
 
-    onClick(){
+    onClickDown(){
         this.changeScreen = true;
     }
 
-    destroy() {
-        document.removeEventListener("click", this.onClick);
+    onClickUp() {
+        this.isClickFinished = true;
     }
 
     update(){
@@ -29,6 +32,7 @@ export class TitleScreen{
 
         if(this.changeScreen){
             this.changeScreen = false;
+            this.isClickFinished = false;
             return "instructions";
         }
     }
