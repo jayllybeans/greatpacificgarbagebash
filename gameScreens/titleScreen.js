@@ -1,7 +1,7 @@
 export class TitleScreen{
     canvas;
     pencil;
-    changeToGame = false;
+    changeInstruction = false;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
@@ -12,18 +12,21 @@ export class TitleScreen{
     }
 
     onClick(){
-        console.log("Hello!");
-        this.changeToGame = true;
+        this.changeInstruction = true;
+        console.log(this);
     }
 
     update(){
-        this.pencil.font = "20px Georgia"
-        this.pencil.fillText("Title", 10, 50);
+        this.pencil.fillStyle = "white";
+        this.pencil.font = "100px Impact";
+        this.pencil.fillText("The Great Pacific Garbage Bash", 300, 100);
 
-        this.pencil.fill = "white";
-        this.pencil.fillRect(200, 200, 100, 50);
-        if(this.changeToGame){
-            this.changeToGame = false;
+        this.pencil.font = "50px Impact";
+        this.pencil.fillText("Click the screen to continue", 600, 300);
+
+        if(this.changeInstruction){
+            console.log("Test");
+            this.changeInstruction = false;
             return "instructions";
         }
     }

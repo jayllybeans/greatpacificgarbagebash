@@ -1,16 +1,35 @@
 export class InstructionScreen{
     canvas;
     pencil;
+    changeToGame = false;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
         this.pencil = pencil;
+
+        this.onClick = this.onClick.bind(this);
+        document.addEventListener("click", this.onClick);
+    }
+
+    onClick(){
+        this.changeToGame = true;
     }
 
     update(){
-        this.pencil.font = "20px Georgia"
-        this.pencil.fillText("Game Over", 10, 50);
+        this.pencil.fillStyle = "white";
+        this.pencil.font = "100px Impact";
+        this.pencil.fillText("Instructions", 10, 100);
 
-        //return "title";
+        this.pencil.font = "35px Impact";
+        this.pencil.fillText("Sitting in the Pacific Ocean is an island of trash that contains around 1.8 trillion pieces of plastic. You are the new operator of Aqua,", 10, 150);
+
+        this.pencil.font = "35px Impact";
+        this.pencil.fillText("a submarine designed to collect a daily quota of trash to help clean the ocean.", 10, 190);
+
+        if(this.changeToGame){
+            this.changeToGame = false;
+            console.log("Hello");
+            return "game";
+        }
     }
 }
