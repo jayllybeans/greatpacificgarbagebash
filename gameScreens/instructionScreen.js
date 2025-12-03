@@ -1,7 +1,7 @@
 export class InstructionScreen{
     canvas;
     pencil;
-    changeToGame = false;
+    changeScreen = false;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
@@ -12,7 +12,11 @@ export class InstructionScreen{
     }
 
     onClick(){
-        this.changeToGame = true;
+        this.changeScreen = true;
+    }
+
+    destroy() {
+        document.removeEventListener("click", this.onClick);
     }
 
     update(){
@@ -26,9 +30,8 @@ export class InstructionScreen{
         this.pencil.font = "35px Impact";
         this.pencil.fillText("a submarine designed to collect a daily quota of trash to help clean the ocean.", 10, 190);
 
-        if(this.changeToGame){
-            this.changeToGame = false;
-            console.log("Hello");
+        if(this.changeScreen){
+            this.changeScreen = false;
             return "game";
         }
     }

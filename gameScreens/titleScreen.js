@@ -1,7 +1,7 @@
 export class TitleScreen{
     canvas;
     pencil;
-    changeInstruction = false;
+    changeScreen = false;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
@@ -12,8 +12,11 @@ export class TitleScreen{
     }
 
     onClick(){
-        this.changeInstruction = true;
-        console.log(this);
+        this.changeScreen = true;
+    }
+
+    destroy() {
+        document.removeEventListener("click", this.onClick);
     }
 
     update(){
@@ -24,9 +27,8 @@ export class TitleScreen{
         this.pencil.font = "50px Impact";
         this.pencil.fillText("Click the screen to continue", 600, 300);
 
-        if(this.changeInstruction){
-            console.log("Test");
-            this.changeInstruction = false;
+        if(this.changeScreen){
+            this.changeScreen = false;
             return "instructions";
         }
     }
