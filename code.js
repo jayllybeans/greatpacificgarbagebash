@@ -26,7 +26,6 @@ console.log(toolbox.shuffleArray(arr));
 
 pencil.fillStyle = (toolbox.getRandomColor());
 pencil.fillRect(50, 50, 150, 100);
-console.log(toolbox.getRandomColor());
 
 function gameLoop(){
     pencil.clearRect(0, 0, canvas.width, canvas.height);
