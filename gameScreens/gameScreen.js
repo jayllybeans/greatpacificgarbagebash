@@ -5,19 +5,22 @@ export class GameScreen{
     canvas;
     pencil;
     changeScreen = false;
+
     quota = 0;
     dailyQuota = Math.floor(Math.random() * (20 - 10)) + 10;
     toolbox = new Toolbox();
+    x = 200;
+    y = 200;
+
     appleCore = document.getElementById("appleCore");
     plasticBag = document.getElementById("plasticBag");
     tire = document.getElementById("tire");
-    trash = [new collisionObject(this.canvas, this.pencil, this.appleCore), new collisionObject(this.canvas, this.pencil, this.plasticBag), (this.canvas, this.pencil, this.tire)];
     cuttlefish = document.getElementById("cuttlefish");
     shark = document.getElementById("shark");
     starfish = document.getElementById("starfish");
-    seaCreatures = [new collisionObject(this.canvas, this.pencil, this.cuttlefish), new collisionObject(this.canvas, this.pencil, this.shark), new collisionObject(this.canvas, this.pencil, this.starfish)];
     aqua = document.getElementById("aqua");
-    currentObject = this.shark;
+
+    currentObject;
     arrayChoice = Math.floor(Math.random() * (2 - 1)) + 1;
     wasHit;
 
@@ -25,6 +28,9 @@ export class GameScreen{
         this.canvas = canvas;
         this.pencil = pencil;
     }
+
+     trash = [new collisionObject(this.canvas, this.pencil, this.appleCore), new collisionObject(this.canvas, this.pencil, this.plasticBag), (this.canvas, this.pencil, this.tire)];
+     seaCreatures = [new collisionObject(this.canvas, this.pencil, this.cuttlefish), new collisionObject(this.canvas, this.pencil, this.shark), new collisionObject(this.canvas, this.pencil, this.starfish)];
 
     quotaCheck(quota){
         this.changeScreen = true;
@@ -61,27 +67,27 @@ export class GameScreen{
         this.pencil.font = "50px Georgia"
         this.pencil.fillText("Quota: " + this.quota + "/" + this.dailyQuota, 10, 50);
 
-        this.pencil.drawImage(this.aqua, this.x, this.y, 150, 50);
+        this.pencil.drawImage(this.aqua, this.x, this.y, 200, 200);
 
-        this.pencil.drawImage(this.currentObject, this.currentObject.x, this.currentObject.y, this.currentObject.height, this.currentObject.width);
+        this.currentObject.draw();
 
         this.wasHit = this.isCollision(this.currentObject);
 
         if(this.wasHit){
             for(let i = 0; i < this.trash.length; i++){
                 if (this.currentObject == this.trash[i]){
-                    quota++;
+                    this.quota++;
                 }
             }
             
             for(let i = 0; i <this.seaCreatures.length; i++){
                 if (this.currentObject == this.seaCreatures[i]){
-                    quota--;
+                    this.quota--;
                 }
             }
         }
 
-        if(quota < 0 || quota == dailyQuota){
+        if(this.quota < 0 || this.quota == this.dailyQuota){
             this.quotaCheck(quota);
         }
     }

@@ -17,16 +17,18 @@ export class collisionObject{
     }
 
     draw(){
-         this.topLeftCorner = { 
-            x : this.x,
-            y : this.y - this.height
-        }
+        this.topLeftCorner = {
+            x: this.x,
+            y: this.y
+        };
 
-        this.bottomRightCorner = { 
-            x : this.x + this.width,
-            y : this.y - this.height + this.height
-        }
+        this.bottomRightCorner = {
+            x: this.x + this.width,
+            y: this.y + this.height
+        };
 
-        this.pencil.drawImage(this.sprite, this.x, this.y - this.height, this.width, this.height);
+        this.pencil.drawImage(this.sprite, this.x, this.y, this.width, this.height);
+
+        this.x -= 10;
     }
 }
