@@ -2,26 +2,27 @@ export class TitleScreen{
     canvas;
     pencil;
     changeScreen = false;
-    isClickFinished = false;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
         this.pencil = pencil;
 
-        this.onClickDown = this.onClickDown.bind(this);
-        this.onClickUp = this.onClickUp.bind(this);
-        document.addEventListener("mousedown", this.onClickDown);
-        document.addEventListener("mouseup", this.onClickUp);
+        this.onClick = this.onClick.bind(this);
     }
 
-    onClickDown(){
+    onClick(){
         this.changeScreen = true;
     }
 
-    onClickUp() {
-        this.isClickFinished = true;
+    enter() {
+        document.addEventListener("click", this.onClick);
     }
 
+    exit() {
+        this.changeScreen = false;
+        document.removeEventListener("click", this.onClick);
+    }
+    
     update(){
         this.pencil.fillStyle = "white";
         this.pencil.font = "100px Impact";
@@ -31,8 +32,7 @@ export class TitleScreen{
         this.pencil.fillText("Click the screen to continue", 600, 300);
 
         if(this.changeScreen){
-            this.changeScreen = false;
-            this.isClickFinished = false;
+            this.exit();
             return "instructions";
         }
     }
