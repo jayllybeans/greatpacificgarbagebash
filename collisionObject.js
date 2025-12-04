@@ -29,6 +29,6 @@ export class collisionObject{
 
         this.pencil.drawImage(this.sprite, this.x, this.y, this.width, this.height);
 
-        this.x -= 10;
+        this.x -= 1;
     }
 }
