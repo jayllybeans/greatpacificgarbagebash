@@ -11,6 +11,9 @@ export class GameScreen{
     aqua = document.getElementById("aqua");
     trash = [];
     seaCreatures = [];
+    upKey = "ArrowUp";
+    downKey = "ArrowDown";
+    keysPressed = {};
     currentObject;
     wasHit;
     x = 300;
@@ -24,6 +27,14 @@ export class GameScreen{
         this.seaCreatures = [new collisionObject(this.canvas, this.pencil, document.getElementById("cuttlefish")), new collisionObject(this.canvas, this.pencil, document.getElementById("shark")), new collisionObject(this.canvas, this.pencil, document.getElementById("starfish"))];
         this.currentObject = this.randomObject();
         this.y = this.canvas.height/2;
+
+        window.addEventListener("keydown", (e) => {
+            this.keysPressed[e.key] = true;
+        });
+
+        window.addEventListener("keyup", (e) => {
+            this.keysPressed[e.key] = false;
+        });
     }
 
     randomObject(){
@@ -34,6 +45,18 @@ export class GameScreen{
         }
         else{
             return this.toolbox.getRandomItem(this.seaCreatures);
+        }
+    }
+
+    move(keysPressed){
+        if(keysPressed[this.upKey])
+        {
+            this.y -= 5;
+        }
+        
+        if(keysPressed[this.downKey])
+        {
+            this.y += 5;
         }
     }
 
@@ -65,6 +88,8 @@ export class GameScreen{
     update(){
         this.pencil.font = "50px Georgia"
         this.pencil.fillText("Quota: " + this.quota + "/" + this.dailyQuota, 10, 50);
+
+        this.move(this.keysPressed);
 
         this.pencil.drawImage(this.aqua, this.x, this.y, 200, 150);
 
