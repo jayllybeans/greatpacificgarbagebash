@@ -3,9 +3,9 @@ export class collisionObject{
     pencil;
     sprite;
     x;
-    y = Math.random() * (900 - 50) + 50;
-    height = 50;
-    width = 50;
+    y = Math.random() * (900 - 200) + 200;
+    height = 100;
+    width = 100;
 
     topLeftCorner;
     bottomRightCorner;

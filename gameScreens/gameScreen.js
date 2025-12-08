@@ -60,18 +60,6 @@ export class GameScreen{
         }
     }
 
-    quotaCheck(quota){
-        this.changeScreen = true;
-        if (quota < 0){
-            this.exit();
-            return "gameOver";
-        }
-        else{
-            this.exit();
-            return "victory";
-        }
-    }
-
      isCollision(obj){
         return (
             this.x < obj.x + obj.width &&
@@ -93,7 +81,7 @@ export class GameScreen{
 
         this.pencil.drawImage(this.aqua, this.x, this.y, 200, 150);
 
-        this.currentObject.x -= 3;
+        this.currentObject.x -= 5;
 
         this.currentObject.draw();
 
@@ -122,7 +110,15 @@ export class GameScreen{
         }
 
         if(this.quota < 0 || this.quota == this.dailyQuota){
-            this.quotaCheck(this.quota);
+            this.changeScreen = true;
+            if (this.quota < 0){
+                this.exit();
+                return "gameOver";
+            }
+            else{
+                this.exit();
+                return "victory";
+            }
         }
     }
 }

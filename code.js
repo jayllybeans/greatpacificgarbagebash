@@ -36,9 +36,11 @@ function gameLoop(){
     }
     if (command == "gameOver"){
         state = gameOver;
+        gameOver.enter();
     }
     if (command == "victory"){
         state = victory;
+        victory.enter();
     }
 }
 
