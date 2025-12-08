@@ -33,7 +33,6 @@ function gameLoop(){
     }
     if (command == "game"){
         state = game;
-        game.enter();
     }
     if (command == "gameOver"){
         state = gameOver;

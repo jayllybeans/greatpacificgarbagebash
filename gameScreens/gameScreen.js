@@ -8,81 +8,96 @@ export class GameScreen{
     quota = 0;
     dailyQuota = Math.floor(Math.random() * (20 - 10)) + 10;
     toolbox = new Toolbox();
-    appleCore = document.getElementById("appleCore");
-    plasticBag = document.getElementById("plasticBag");
-    tire = document.getElementById("tire");
-    trash = [new collisionObject(this.canvas, this.pencil, this.appleCore), new collisionObject(this.canvas, this.pencil, this.plasticBag), (this.canvas, this.pencil, this.tire)];
-    cuttlefish = document.getElementById("cuttlefish");
-    shark = document.getElementById("shark");
-    starfish = document.getElementById("starfish");
-    seaCreatures = [new collisionObject(this.canvas, this.pencil, this.cuttlefish), new collisionObject(this.canvas, this.pencil, this.shark), new collisionObject(this.canvas, this.pencil, this.starfish)];
     aqua = document.getElementById("aqua");
-    currentObject = this.shark;
-    arrayChoice = Math.floor(Math.random() * (2 - 1)) + 1;
+    trash = [];
+    seaCreatures = [];
+    currentObject;
     wasHit;
+    x = 300;
+    y;
 
     constructor(canvas, pencil){
         this.canvas = canvas;
         this.pencil = pencil;
+
+        this.trash = [new collisionObject(this.canvas, this.pencil, document.getElementById("appleCore")), new collisionObject(this.canvas, this.pencil, document.getElementById("plasticBag")), new collisionObject(this.canvas, this.pencil, document.getElementById("tire"))];
+        this.seaCreatures = [new collisionObject(this.canvas, this.pencil, document.getElementById("cuttlefish")), new collisionObject(this.canvas, this.pencil, document.getElementById("shark")), new collisionObject(this.canvas, this.pencil, document.getElementById("starfish"))];
+        this.currentObject = this.randomObject();
+        this.y = this.canvas.height/2;
+    }
+
+    randomObject(){
+        let options = ["trash", "seaCreatures"];
+        let choice = this.toolbox.getRandomItem(options);
+        if (choice == "trash"){
+            return this.toolbox.getRandomItem(this.trash);
+        }
+        else{
+            return this.toolbox.getRandomItem(this.seaCreatures);
+        }
     }
 
     quotaCheck(quota){
         this.changeScreen = true;
         if (quota < 0){
+            this.exit();
             return "gameOver";
         }
         else{
+            this.exit();
             return "victory";
         }
     }
 
-    isCollision(collisionObject){
-        let isFarEnoughRight = this.x > collisionObject.topLeftCorner.x;
-        let isLowEnough = this.y > collisionObject.topLeftCorner.y;
-        let isFarEnoughLeft = this.x < collisionObject.bottomRightCorner.x;
-        let isHighEnough = this.y < collisionObject.bottomRightCorner.y;
-
-         if((isFarEnoughRight && isLowEnough && isFarEnoughLeft && isHighEnough)){
-            return true;
-         }
-         return false;
-    }
-
-    enter() {
-        document.addEventListener("click", this.onClick);
+     isCollision(obj){
+        return (
+            this.x < obj.x + obj.width &&
+            this.x + 100 > obj.x &&            // 100 = rough width of player sprite
+            this.y < obj.y + obj.height &&
+            this.y + 100 > obj.y              // 100 = rough height of player sprite
+        );
     }
 
     exit() {
         this.changeScreen = false;
-        document.removeEventListener("click", this.onClick);
     }
 
     update(){
         this.pencil.font = "50px Georgia"
         this.pencil.fillText("Quota: " + this.quota + "/" + this.dailyQuota, 10, 50);
 
-        this.pencil.drawImage(this.aqua, this.x, this.y, 150, 50);
+        this.pencil.drawImage(this.aqua, this.x, this.y, 200, 150);
 
-        this.pencil.drawImage(this.currentObject, this.currentObject.x, this.currentObject.y, this.currentObject.height, this.currentObject.width);
+        this.currentObject.x -= 3;
+
+        this.currentObject.draw();
 
         this.wasHit = this.isCollision(this.currentObject);
-
+        
         if(this.wasHit){
             for(let i = 0; i < this.trash.length; i++){
                 if (this.currentObject == this.trash[i]){
-                    quota++;
+                    this.quota++;
                 }
             }
             
             for(let i = 0; i <this.seaCreatures.length; i++){
                 if (this.currentObject == this.seaCreatures[i]){
-                    quota--;
+                    this.quota--;
                 }
             }
+
+            this.currentObject = this.randomObject();
+            this.currentObject.reset();
         }
 
-        if(quota < 0 || quota == dailyQuota){
-            this.quotaCheck(quota);
+        if(this.currentObject.x < -this.currentObject.width){
+            this.currentObject = this.randomObject();
+            this.currentObject.reset();
+        }
+
+        if(this.quota < 0 || this.quota == this.dailyQuota){
+            this.quotaCheck(this.quota);
         }
     }
 }
