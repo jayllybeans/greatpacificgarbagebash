@@ -113,11 +113,13 @@ export class GameScreen{
             this.changeScreen = true;
             if (this.quota < 0){
                 this.quota = 0;
+                this.dailyQuota = Math.floor(Math.random() * (20 - 10)) + 10;
                 this.exit();
                 return "gameOver";
             }
             else{
                 this.quota = 0;
+                this.dailyQuota = Math.floor(Math.random() * (20 - 10)) + 10;
                 this.exit();
                 return "victory";
             }
