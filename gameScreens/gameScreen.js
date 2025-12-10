@@ -112,13 +112,13 @@ export class GameScreen{
         if(this.quota < 0 || this.quota == this.dailyQuota){
             this.changeScreen = true;
             if (this.quota < 0){
-                this.exit();
                 this.quota = 0;
+                this.exit();
                 return "gameOver";
             }
             else{
-                this.exit();
                 this.quota = 0;
+                this.exit();
                 return "victory";
             }
         }
