@@ -113,10 +113,12 @@ export class GameScreen{
             this.changeScreen = true;
             if (this.quota < 0){
                 this.exit();
+                this.quota = 0;
                 return "gameOver";
             }
             else{
                 this.exit();
+                this.quota = 0;
                 return "victory";
             }
         }
